@@ -15,7 +15,15 @@ export class Header {
   private themeService = inject(ThemeService);
 
   readonly user = this.authService.user;
-  readonly isAuthorized = computed(() => this.user() !== null);
+  /** Full accounts only — guests see the login/signup actions instead. */
+  readonly isAuthorized = computed(() => {
+    const user = this.user();
+    return user !== null && !user.isGuest;
+  });
+  readonly guestName = computed(() => {
+    const user = this.user();
+    return user?.isGuest ? user.login : null;
+  });
   readonly theme = this.themeService.theme;
 
   signOut(): void {

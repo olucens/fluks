@@ -11,6 +11,7 @@
 - **Shared playlist** — the room admin curates a queue of videos; optional "guest control" lets viewers drive playback too
 - **Live chat** — talk while you watch
 - **Accounts & profiles** — JWT-based auth with access/refresh tokens, editable profile with nickname
+- **Guest access** — a shared room link works without registration: visitors get a readable throwaway identity (e.g. `bright-otter-42`) and can watch and chat right away
 - **Light / dark theme** — follows system preference, with a manual toggle in the header
 
 ## Architecture

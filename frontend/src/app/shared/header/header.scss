@@ -20,6 +20,24 @@
 // The logo is its own group so themes/animations can restyle it
 // without touching the rest of the header.
 .header__logo {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	color: var(--app-accent);
+	transition: filter var(--app-transition-fast);
+
+	.header__brand:hover & {
+		filter: brightness(1.15);
+	}
+}
+
+.header__logo-icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	flex-shrink: 0;
+}
+
+.header__logo-text {
 	font-size: 1.05rem;
 	font-weight: 800;
 	letter-spacing: -0.02em;
@@ -27,11 +45,19 @@
 	background-clip: text;
 	-webkit-background-clip: text;
 	color: transparent;
-	transition: filter var(--app-transition-fast);
+}
 
-	.header__brand:hover & {
-		filter: brightness(1.15);
-	}
+.header__guest {
+	padding: 0.4rem 0.7rem;
+	border-radius: 999px;
+	border: 1px dashed var(--app-border-strong);
+	color: var(--app-muted);
+	font-size: 0.8rem;
+	font-weight: 600;
+	white-space: nowrap;
+	max-width: 9rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .header__actions {

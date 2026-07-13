@@ -21,6 +21,12 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  @Post('guest')
+  @HttpCode(200)
+  async guest() {
+    return this.authService.guest();
+  }
+
   @Post('refresh')
   @HttpCode(200)
   async refresh(@Body() dto: RefreshDto) {

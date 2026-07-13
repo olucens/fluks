@@ -10,6 +10,7 @@ const REFRESH_TOKEN_KEY = 'fluks.refreshToken';
 interface JwtPayload {
   userId: string;
   login: string;
+  roles?: string[];
   exp: number;
 }
 
@@ -99,6 +100,20 @@ export class AuthService {
     }
   }
 
+  /** Anonymous session for joining rooms straight from a shared link. */
+  async signInAsGuest(): Promise<AuthResult> {
+    try {
+      const tokens = await firstValueFrom(
+        this.http.post<AuthTokens>(`${this.baseUrl}/guest`, {})
+      );
+      this.storeTokens(tokens);
+      this.restoreSession();
+      return { error: null };
+    } catch (error) {
+      return { error: toAuthError(error) };
+    }
+  }
+
   signOut(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -134,7 +149,11 @@ export class AuthService {
       return;
     }
 
-    this.user.set({ id: payload.userId, login: payload.login });
+    this.user.set({
+      id: payload.userId,
+      login: payload.login,
+      isGuest: payload.roles?.includes('guest') ?? false,
+    });
   }
 }
 

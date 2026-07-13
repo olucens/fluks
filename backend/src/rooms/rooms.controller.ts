@@ -15,6 +15,7 @@ import { CreateRoomDto } from './dto/create-rooms.dto';
 import { UpdateRoomDto } from './dto/update-rooms.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { Public } from '../auth/decorators/public.decorator';
+import { Roles } from '../auth/decorators/roles.decorator';
 import type { JwtUser } from './room.types';
 
 @Controller('rooms')
@@ -33,6 +34,8 @@ export class RoomController {
     return this.roomsService.findOneWithState(id);
   }
 
+  // Guests hold valid JWTs but must not own rooms — registered roles only.
+  @Roles('user', 'admin')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(
@@ -42,6 +45,7 @@ export class RoomController {
     return this.roomsService.create(dto, user.userId);
   }
 
+  @Roles('user', 'admin')
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -51,6 +55,7 @@ export class RoomController {
     return this.roomsService.update(id, dto, user.userId);
   }
 
+  @Roles('user', 'admin')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(

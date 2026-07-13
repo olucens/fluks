@@ -41,15 +41,16 @@ All routes are JWT-protected unless marked public. Global rate limit: 100 req/mi
 | GET | `/health` | public | Health check |
 | POST | `/auth/signup` | public | Register (`login`, `password`) |
 | POST | `/auth/login` | public | Get access + refresh tokens |
+| POST | `/auth/guest` | public | Throwaway guest identity (JWT only, no DB row, no refresh token) |
 | POST | `/auth/refresh` | public | Rotate tokens (`refreshToken`) |
 | GET | `/user/me` | ✔ | Current user profile |
 | PATCH | `/user/me` | ✔ | Update profile (nickname, …) |
 | PUT | `/user/:id/password` | ✔ | Change password |
 | GET | `/rooms` | public | List rooms |
 | GET | `/rooms/:id` | public | Room details |
-| POST | `/rooms` | ✔ | Create room (`allowGuestControl` optional) |
-| PUT | `/rooms/:id` | ✔ (admin) | Update room |
-| DELETE | `/rooms/:id` | ✔ (admin) | Delete room |
+| POST | `/rooms` | ✔ registered | Create room (`allowGuestControl` optional; guests get 403) |
+| PUT | `/rooms/:id` | ✔ registered (admin) | Update room |
+| DELETE | `/rooms/:id` | ✔ registered (admin) | Delete room |
 
 ## WebSocket events (socket.io)
 

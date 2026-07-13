@@ -2,14 +2,6 @@
 
 ## v1.1.0 (planned)
 
-### Guest access without registration
-Let visitors join a room straight from a shared link.
-
-- Backend: `POST /auth/guest` issues a short-lived JWT with a generated identity (`guest-<random>` login, `guest` role, no DB row — or a throwaway row with a TTL cleanup job). The socket gateway already validates any JWT signed with `JWT_SECRET_KEY`, so no gateway changes are needed for read-only participation.
-- Restrictions: guests can watch and chat; they cannot create rooms (`RolesGuard` already scopes by role) or control playback unless the room has `allowGuestControl`.
-- Frontend: "Continue as guest" button on the room join screen and on `auth/login`; a random readable nickname (e.g. `bright-otter-42`); guest state clearly shown in the header with an upsell to register.
-- Origin note: the original team design assumed channel-ownership transfer; without it, randomly generated guest identities are acceptable.
-
 ### More video sources
 Today `extract-video-id` and the player are YouTube-only.
 
@@ -37,3 +29,5 @@ Installable app with offline shell — see the step-by-step guide in [PWA.md](PW
 - Access-token auto-refresh (HTTP interceptor + socket reconnect with fresh token).
 - Helmet security headers and request body-size limits; global rate limiting.
 - DVD-style room loading screen.
+- Guest access: a shared room link works without registration — `POST /auth/guest` issues a throwaway JWT identity (readable name like `bright-otter-42`, `guest` role, no DB row); the room route silently signs visitors in as guests; guests can watch and chat but get 403 on room mutations. Possible follow-ups: "Continue as guest" button on the login screen, upgrade path that keeps the nickname.
+- Original SVG logo (potion flask with a flux wave) in the header and as favicon.
