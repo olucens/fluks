@@ -1,0 +1,15 @@
+<button
+  (click)="onClick()"
+  class="auth-button"
+  type="button"
+>
+  <img
+    [alt]="text()"
+    [src]="icon()"
+    class="auth-button__icon"
+  >
+
+  <span>
+    {{ text() }}
+  </span>
+</button>

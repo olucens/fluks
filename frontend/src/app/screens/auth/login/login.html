@@ -1,0 +1,99 @@
+<div class="auth">
+  <form
+    [formGroup]="form"
+    class="auth__card"
+  >
+
+    <h1 class="auth__title">
+      Login
+    </h1>
+
+    <p class="auth__subtitle">
+      Sign in to your account
+    </p>
+
+    <div class="auth__field">
+
+      <input
+        class="auth__input"
+        formControlName="email"
+        placeholder="Email"
+        type="email"
+      />
+
+      <div class="auth__error">
+        @if (form.controls.email.touched) {
+
+          @if (form.controls.email.errors?.['required']) {
+            <span>Email is required</span>
+          }
+
+          @if (form.controls.email.errors?.['email']) {
+            <span>Invalid email address</span>
+          }
+
+        }
+      </div>
+
+    </div>
+
+    <div class="auth__field">
+
+      <input
+        class="auth__input"
+        formControlName="password"
+        placeholder="Password"
+        type="password"
+      />
+
+      <div class="auth__error">
+        @if (form.controls.password.touched) {
+
+          @if (form.controls.password.errors?.['required']) {
+            <span>Password is required</span>
+          }
+
+          @if (form.controls.password.errors?.['minlength']) {
+            <span>Minimum 6 characters</span>
+          }
+
+        }
+      </div>
+
+    </div>
+
+    @if (errorMessage()) {
+      <p class="auth__error auth__error--submit" role="alert">
+        {{ errorMessage() }}
+      </p>
+    }
+
+    <button
+      (click)="login()"
+      [disabled]="form.invalid"
+      class="auth__submit"
+      type="button"
+    >
+      Sign in
+    </button>
+
+    <div class="auth__links">
+
+      <a
+        class="auth__link"
+        routerLink="/auth/register"
+      >
+        Sign up
+      </a>
+
+      <a
+        class="auth__link"
+        routerLink="/auth/forgot-password"
+      >
+        Forgot password?
+      </a>
+
+    </div>
+
+  </form>
+</div>

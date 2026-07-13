@@ -1,0 +1,121 @@
+<div class="auth">
+    <form
+            [formGroup]="form"
+            class="auth__card"
+    >
+
+        <h1 class="auth__title">
+            Register
+        </h1>
+
+        <p class="auth__subtitle">
+            Create your account
+        </p>
+
+        <div class="auth__field">
+
+            <input
+                    class="auth__input"
+                    formControlName="username"
+                    placeholder="Username"
+                    type="text"
+            />
+
+            <div class="auth__error">
+                @if (form.controls.username.touched) {
+
+                    @if (form.controls.username.errors?.['required']) {
+                        <span>Username is required</span>
+                    }
+
+                    @if (form.controls.username.errors?.['minlength']) {
+                        <span>Minimum 2 characters</span>
+                    }
+
+                }
+            </div>
+
+        </div>
+
+        <div class="auth__field">
+
+            <input
+                    class="auth__input"
+                    formControlName="email"
+                    placeholder="Email"
+                    type="email"
+            />
+
+            <div class="auth__error">
+                @if (form.controls.email.touched) {
+
+                    @if (form.controls.email.errors?.['required']) {
+                        <span>Email is required</span>
+                    }
+
+                    @if (form.controls.email.errors?.['email']) {
+                        <span>Invalid email address</span>
+                    }
+
+                }
+            </div>
+
+        </div>
+
+        <div class="auth__field">
+
+            <input
+                    class="auth__input"
+                    formControlName="password"
+                    placeholder="Password"
+                    type="password"
+            />
+
+            <div class="auth__error">
+                @if (form.controls.password.touched) {
+
+                    @if (form.controls.password.errors?.['required']) {
+                        <span>Password is required</span>
+                    }
+
+                    @if (form.controls.password.errors?.['minlength']) {
+                        <span>Minimum 6 characters</span>
+                    }
+
+                }
+            </div>
+
+        </div>
+
+        @if (errorMessage()) {
+            <p class="auth__error auth__error--submit" role="alert">
+                {{ errorMessage() }}
+            </p>
+        }
+
+        <button
+                (click)="register()"
+                [disabled]="form.invalid"
+                class="auth__submit"
+                type="button"
+        >
+            Create account
+        </button>
+
+        <div class="auth__links">
+
+      <span class="auth__text">
+        Already have an account?
+      </span>
+
+            <a
+                    class="auth__link"
+                    routerLink="/auth/login"
+            >
+                Sign in
+            </a>
+
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,29 @@
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid var(--app-border);
+	border-radius: 16px;
+	background: var(--app-surface);
+	backdrop-filter: blur(8px);
+}
+
+.footer__brand {
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.footer__links {
+	display: inline-flex;
+	gap: 0.8rem;
+	flex-wrap: wrap;
+}
+
+.footer__copy {
+	margin: 0;
+	font-size: 0.8rem;
+	color: var(--app-muted);
+}

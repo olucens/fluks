@@ -1,0 +1,35 @@
+.header__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.875rem 1rem;
+	border: 1px solid var(--app-border);
+	border-radius: 16px;
+	background: var(--app-surface);
+	backdrop-filter: blur(8px);
+}
+
+.header__brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+
+.header__nav {
+	display: inline-flex;
+	gap: 0.8rem;
+	flex-wrap: wrap;
+}
+
+.header__link {
+	padding: 0.4rem 0.7rem;
+	border-radius: 999px;
+	color: var(--app-text);
+	text-decoration: none;
+	font-size: 0.85rem;
+	font-weight: 600;
+	background: var(--app-muted-bg);
+}

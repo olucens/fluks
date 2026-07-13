@@ -1,0 +1,18 @@
+<section class="channel-list">
+	<header class="channel-list__header">
+		<p class="channel-list__eyebrow">Live now</p>
+		<h2 class="channel-list__title">Channels</h2>
+		<input
+			class="channel-list__search"
+			type="search"
+			placeholder="Search channels..."
+			(input)="setQuery($any($event.target).value)"
+		/>
+	</header>
+
+	<div class="channel-list__grid" role="list">
+		@for (channel of channels(); track channel.id) {
+			<app-channel-card [channel]="channel" />
+		}
+	</div>
+</section>

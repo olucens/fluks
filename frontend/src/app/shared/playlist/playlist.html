@@ -1,0 +1,24 @@
+<div class="playlist">
+  <div class="playlist__header">Queue ({{ items().length }})</div>
+  @if (items().length === 0) {
+    <div class="playlist__empty">No videos queued</div>
+  }
+  @for (item of items(); track item.id; let i = $index) {
+    <div
+      class="playlist__item"
+      appScrollIntoView
+      [isActive]="i === currentIndex()"
+      [class.playlist__item--active]="i === currentIndex()"
+      (click)="canEdit() && select.emit(i)"
+    >
+      <span class="playlist__index">{{ i + 1 }}</span>
+      <span class="playlist__url">{{ item.url }}</span>
+      @if (canEdit()) {
+        <button
+          class="playlist__remove"
+          (click)="remove.emit(item.id); $event.stopPropagation()"
+        >✕</button>
+      }
+    </div>
+  }
+</div>

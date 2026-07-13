@@ -1,0 +1,9 @@
+.link-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  app-text-input {
+    flex: 1;
+  }
+}

@@ -1,0 +1,105 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  background: var(--app-surface);
+  overflow: hidden;
+
+  &__header {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--app-border);
+    background: var(--app-surface-2);
+    color: var(--app-text-strong);
+  }
+
+  &__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  &__message-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  &__author {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--app-accent);
+  }
+
+  &__time {
+    font-size: 0.625rem;
+    color: var(--app-muted);
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    word-break: break-word;
+    color: var(--app-text);
+  }
+
+  &__form {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--app-border);
+  }
+
+  &__input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--app-border-strong);
+    border-radius: var(--app-radius-sm);
+    font-size: 0.875rem;
+    background: var(--app-bg-elevated);
+    color: var(--app-text);
+    outline: none;
+
+    &::placeholder {
+      color: var(--app-muted);
+    }
+
+    &:focus {
+      border-color: var(--app-accent);
+      box-shadow: var(--app-focus-ring);
+    }
+  }
+
+  &__send {
+    padding: 0.5rem 1rem;
+    background: var(--app-accent);
+    color: var(--app-bg);
+    border: none;
+    border-radius: var(--app-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--app-transition-fast);
+
+    &:hover:not(:disabled) {
+      background: var(--app-accent-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

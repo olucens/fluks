@@ -1,0 +1,24 @@
+.home-page {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	gap: 1.5rem;
+	padding: clamp(1rem, 2vw, 2rem);
+	background: var(--app-bg);
+	color: var(--app-text);
+}
+
+.home-page__content {
+	width: min(1200px, 100%);
+	margin-inline: auto;
+}
+
+.home-page__footer-link {
+	padding: 0.4rem 0.7rem;
+	border-radius: 999px;
+	color: var(--app-text);
+	text-decoration: none;
+	font-size: 0.85rem;
+	font-weight: 600;
+	background: var(--app-muted-bg);
+}

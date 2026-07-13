@@ -1,0 +1,25 @@
+<div class="chat">
+  <div class="chat__header">Chat</div>
+
+  <div class="chat__messages" #messageList>
+    @for (msg of messages(); track msg.id) {
+      <div class="chat__message">
+        <div class="chat__message-meta">
+          <span class="chat__author">{{ msg.author }}</span>
+          <span class="chat__time">{{ msg.sentAt | date: 'shortTime' }}</span>
+        </div>
+        <div class="chat__text">{{ msg.text }}</div>
+      </div>
+    }
+  </div>
+
+  <form class="chat__form" (submit)="onSubmit($event)">
+    <input
+      class="chat__input"
+      type="text"
+      placeholder="Say something..."
+      [formControl]="messageControl"
+    />
+    <button class="chat__send" type="submit" [disabled]="messageControl.invalid">Send</button>
+  </form>
+</div>

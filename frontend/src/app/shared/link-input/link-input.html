@@ -1,0 +1,7 @@
+<form class="link-input" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-text-input
+    placeholder="Paste YouTube link..."
+    [control]="form.controls.url"
+  />
+  <app-button label="Add link" (clicked)="onSubmit()" />
+</form>
