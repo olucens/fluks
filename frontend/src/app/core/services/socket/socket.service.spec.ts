@@ -13,6 +13,7 @@ const { fakeSocket } = vi.hoisted(() => {
   const fakeSocket = {
     connected: false,
     emit: vi.fn(),
+    connect: vi.fn(),
     disconnect: vi.fn(),
     on: vi.fn((event: string, cb: Handler) => {
       handlers.set(event, [...(handlers.get(event) ?? []), cb]);
@@ -54,31 +55,46 @@ describe('SocketService', () => {
     fakeSocket.anyHandlers.length = 0;
   });
 
-  it('connects to the configured socket URL passing the auth token', () => {
-    service.connect('token-123');
+  it('connects to the configured socket URL with an auth callback that reads a fresh token', () => {
+    service.connect(() => 'token-123');
 
     expect(ioMock).toHaveBeenCalledWith(
       environment.socketUrl,
-      expect.objectContaining({ auth: { token: 'token-123' } })
+      expect.objectContaining({ auth: expect.any(Function) })
     );
+
+    const options = ioMock.mock.calls[0][1] as {
+      auth: (cb: (data: object) => void) => void;
+    };
+    let sent: object | undefined;
+    options.auth((data) => (sent = data));
+    expect(sent).toEqual({ token: 'token-123' });
+  });
+
+  it('reconnects manually when the server drops the socket', () => {
+    service.connect(() => 'token-123');
+
+    fakeSocket.trigger('disconnect', 'io server disconnect');
+
+    expect(fakeSocket.connect).toHaveBeenCalled();
   });
 
   it('does not open a second connection when already connected', () => {
-    service.connect('token-123');
-    service.connect('token-123');
+    service.connect(() => 'token-123');
+    service.connect(() => 'token-123');
 
     expect(ioMock).toHaveBeenCalledTimes(1);
   });
 
   it('emits joinRoom with the room id', () => {
-    service.connect('token-123');
+    service.connect(() => 'token-123');
     service.joinRoom('room-1');
 
     expect(fakeSocket.emit).toHaveBeenCalledWith('joinRoom', { roomId: 'room-1' });
   });
 
   it('forwards custom events with their payload', () => {
-    service.connect('token-123');
+    service.connect(() => 'token-123');
     service.emit('chatMessage', { roomId: 'room-1', text: 'hi' });
 
     expect(fakeSocket.emit).toHaveBeenCalledWith('chatMessage', {
@@ -88,7 +104,7 @@ describe('SocketService', () => {
   });
 
   it('streams socket events through on() as an observable', () => {
-    service.connect('token-123');
+    service.connect(() => 'token-123');
 
     const received: unknown[] = [];
     const sub = service.on<{ text: string }>('chatMessage').subscribe((m) => received.push(m));
@@ -105,14 +121,14 @@ describe('SocketService', () => {
     const received: unknown[] = [];
     service.on<{ text: string }>('chatMessage').subscribe((m) => received.push(m));
 
-    service.connect('token-123');
+    service.connect(() => 'token-123');
     fakeSocket.trigger('chatMessage', { text: 'early bird' });
 
     expect(received).toEqual([{ text: 'early bird' }]);
   });
 
   it('tears the socket down on disconnect()', () => {
-    service.connect('token-123');
+    service.connect(() => 'token-123');
     service.disconnect();
 
     expect(fakeSocket.disconnect).toHaveBeenCalled();

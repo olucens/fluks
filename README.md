@@ -11,7 +11,7 @@
 - **Shared playlist** — the room admin curates a queue of videos; optional "guest control" lets viewers drive playback too
 - **Live chat** — talk while you watch
 - **Accounts & profiles** — JWT-based auth with access/refresh tokens, editable profile with nickname
-- **Light / dark theme** — follows system preference
+- **Light / dark theme** — follows system preference, with a manual toggle in the header
 
 ## Architecture
 
@@ -73,6 +73,8 @@ cd backend  && npm test     # Jest
 ## Deployment
 
 See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — GitHub Pages (frontend), Render Blueprint (backend + Redis), Neon (Postgres), DNS setup for fluks.org.
+
+Planned work lives in [docs/ROADMAP.md](docs/ROADMAP.md) (guest access, more video sources, PWA — see [docs/PWA.md](docs/PWA.md)).
 
 ## Acknowledgements
 

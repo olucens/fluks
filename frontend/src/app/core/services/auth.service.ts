@@ -39,6 +39,39 @@ export class AuthService {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
+  refreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
+  private refreshPromise: Promise<boolean> | null = null;
+
+  /**
+   * Exchange the refresh token for a fresh pair. Single-flight: parallel
+   * 401s share one request. Signs the user out when the refresh fails.
+   */
+  refreshSession(): Promise<boolean> {
+    this.refreshPromise ??= this.doRefresh().finally(() => {
+      this.refreshPromise = null;
+    });
+    return this.refreshPromise;
+  }
+
+  private async doRefresh(): Promise<boolean> {
+    const refreshToken = this.refreshToken();
+    if (!refreshToken) return false;
+    try {
+      const tokens = await firstValueFrom(
+        this.http.post<AuthTokens>(`${this.baseUrl}/refresh`, { refreshToken })
+      );
+      this.storeTokens(tokens);
+      this.restoreSession();
+      return true;
+    } catch {
+      this.signOut();
+      return false;
+    }
+  }
+
   async signUp(email: string, password: string): Promise<AuthResult> {
     try {
       await firstValueFrom(
