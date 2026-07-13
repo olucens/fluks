@@ -1,36 +1,79 @@
-# vejas-backend-v2
+# Fluks API
 
-A production-ready NestJS application
+NestJS backend for [Fluks](../README.md) — synchronized watch-together rooms. PostgreSQL (Prisma) for durable data, Redis for live room state, socket.io for real-time events, JWT auth with refresh tokens.
 
-## Quick Start
+## Quick start
 
 ```bash
 cp .env.example .env
-npm install
-npm run prisma:migrate
+docker compose up -d --build     # API + Postgres + Redis, migrations run automatically
+```
+
+Or against your own Postgres/Redis:
+
+```bash
+npm ci
+npx prisma migrate dev
 npm run start:dev
 ```
 
 Health check: `GET /health`
 
-## Add Auth
+## Environment variables
+
+| Variable | Description | Example |
+|---|---|---|
+| `PORT` | HTTP/WS port | `4000` |
+| `CORS_ORIGIN` | Comma-separated list of allowed origins | `https://fluks.org,http://localhost:4200` |
+| `DATABASE_URL` | Postgres connection string (Neon: add `sslmode=require`) | `postgresql://user:pass@host:5432/fluks_db?schema=public` |
+| `REDIS_URL` | Redis connection string | `redis://localhost:6379` |
+| `JWT_SECRET_KEY` / `JWT_SECRET_REFRESH_KEY` | Token signing secrets | — |
+| `TOKEN_EXPIRE_TIME` / `TOKEN_REFRESH_EXPIRE_TIME` | Token lifetimes | `1h` / `24h` |
+| `CRYPT_SALT` | bcrypt salt rounds | `10` |
+| `LOG_LEVEL`, `LOG_DIR` | Logging verbosity and file directory | `2`, `logs` |
+
+## REST API
+
+All routes are JWT-protected unless marked public. Global rate limit: 100 req/min.
+
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| GET | `/health` | public | Health check |
+| POST | `/auth/signup` | public | Register (`login`, `password`) |
+| POST | `/auth/login` | public | Get access + refresh tokens |
+| POST | `/auth/refresh` | public | Rotate tokens (`refreshToken`) |
+| GET | `/user/me` | ✔ | Current user profile |
+| PATCH | `/user/me` | ✔ | Update profile (nickname, …) |
+| PUT | `/user/:id/password` | ✔ | Change password |
+| GET | `/rooms` | public | List rooms |
+| GET | `/rooms/:id` | public | Room details |
+| POST | `/rooms` | ✔ | Create room (`allowGuestControl` optional) |
+| PUT | `/rooms/:id` | ✔ (admin) | Update room |
+| DELETE | `/rooms/:id` | ✔ (admin) | Delete room |
+
+## WebSocket events (socket.io)
+
+Connect with `auth: { token: <accessToken> }` — connections without a valid JWT are dropped.
+
+| Client → Server | Server → Client | Notes |
+|---|---|---|
+| `joinRoom` / `leaveRoom` | `roomState`, `viewersCount` | Join emits a full state snapshot |
+| `playbackUpdate` | `playbackUpdate` | Admin only, unless room has `allowGuestControl` |
+| `chatMessage` | `chatMessage` | Broadcast to the room |
+| `playlistAdd` / `playlistSelect` / `playlistRemove` | `playlistUpdate` | Admin only |
+
+## Database
+
+Prisma schema in [prisma/schema.prisma](prisma/schema.prisma): `User` (login, hashed password, nickname, profile fields) and `Room` (name, admin, `allowGuestControl`). Migrations run via `prisma migrate deploy` on container start (see [Dockerfile](Dockerfile)).
 
 ```bash
-zimt auth
+npm run prisma:migrate    # create/apply migration in dev
+npm run prisma:generate   # regenerate client
 ```
 
-## Generate Endpoints
+## Tests
 
 ```bash
-# From a name
-zimt generate products
-
-# From SQL
-zimt generate create "CREATE TABLE orders (id SERIAL PRIMARY KEY, total DECIMAL NOT NULL)"
-```
-
-## Docker
-
-```bash
-npm run docker:build
+npm test          # unit (Jest)
+npm run test:e2e  # e2e (requires running database)
 ```

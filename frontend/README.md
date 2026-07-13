@@ -1,71 +1,42 @@
-# Vejas-frontend
+# Fluks Frontend
 
-An application that allows users to connect on a platform to synchronize their shared viewing of online content.
+Angular 22 SPA for [Fluks](../README.md) — synchronized watch-together rooms. Standalone components, signals, SCSS design-token theming (light/dark), socket.io client for real-time room events.
 
-**Live:** [https://zedmalatesta.github.io/Vejas-frontend/](https://zedmalatesta.github.io/Vejas-frontend/)
+**Live:** [https://fluks.org](https://fluks.org)
 
-**Demo video:** [Watch demo](https://zedmalatesta.github.io/Vejas-frontend/assets/demo.mp4)
-
-## Collaborators
-
-- [@ZedMalatesta](https://github.com/ZedMalatesta)
-- [@olucens](https://github.com/olucens)
-- [@amelur](https://github.com/amelur)
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
-
-## Development server
-
-To start a local development server, run:
+## Development
 
 ```bash
-ng serve
+npm ci
+npm start          # http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The dev build talks to the API at `http://localhost:3000` (`src/environments/environment.ts`); production points at `https://fluks-api.onrender.com` (`environment.prod.ts`). To run the API locally, see [backend/README.md](../backend/README.md).
 
-## Code scaffolding
+## Scripts
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Command | What it does |
+|---|---|
+| `npm start` | Dev server with live reload |
+| `npm run build` | Production build → `dist/fluks-frontend/browser` |
+| `npm test` | Unit tests (Vitest) |
+| `npm run lint` | ESLint over `src` |
 
-```bash
-ng generate component component-name
+## Structure
+
+```
+src/app/
+├── core/        # guards, interceptors (auth, errors), services, pipes
+├── models/      # shared interfaces
+├── screens/     # routed pages: home, auth, room, create-room, profile, 404
+├── shared/      # reusable UI: header, footer, chat, playlist, video-player, inputs
+└── utils/       # playback sync, video id extraction
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Theming
 
-```bash
-ng generate --help
-```
+All components use semantic CSS custom properties defined in `src/styles.scss` (`--app-*` tokens). Light/dark palettes follow `prefers-color-scheme` and can be forced via `[data-theme]` on the root element.
 
-## Building
+## Deployment
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Deployed to GitHub Pages by `.github/workflows/deploy-frontend.yml` on every push to `main` that touches `frontend/`: production build with `--base-href /`, a `CNAME` for the custom domain, and a `404.html` SPA fallback. Details in [docs/DEPLOYMENT.md](../docs/DEPLOYMENT.md).
