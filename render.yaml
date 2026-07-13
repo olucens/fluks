@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: fluks-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL # Neon connection string, entered on blueprint creation
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: fluks-redis
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_REFRESH_KEY
+        generateValue: true
+      - key: CRYPT_SALT
+        value: '10'
+      - key: TOKEN_EXPIRE_TIME
+        value: 1h
+      - key: TOKEN_REFRESH_EXPIRE_TIME
+        value: 24h
+      - key: CORS_ORIGIN
+        value: https://fluks.org,https://www.fluks.org
+      - key: LOG_LEVEL
+        value: '2'
+
+  - type: keyvalue
+    name: fluks-redis
+    plan: free
+    ipAllowList: [] # internal connections only
