@@ -3,14 +3,22 @@ import { CanActivateFn, Router } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
-/** Full accounts only — guests are bounced to login (profile, room creation). */
-export const authGuard: CanActivateFn = async () => {
+/**
+ * Full accounts only — guests and anonymous visitors are bounced to login
+ * (profile, room creation). The intended destination travels along as
+ * `returnUrl`, so signing in lands the user where they were headed.
+ */
+export const authGuard: CanActivateFn = async (_route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
   const user = authService.user();
 
-  return user && !user.isGuest ? true : router.createUrlTree(['/auth/login']);
+  return user && !user.isGuest
+    ? true
+    : router.createUrlTree(['/auth/login'], {
+        queryParams: { returnUrl: state.url },
+      });
 };
 
 /**

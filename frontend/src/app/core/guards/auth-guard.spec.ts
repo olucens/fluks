@@ -9,12 +9,12 @@ describe('auth guards', () => {
   const user = vi.fn<() => AuthUser | null>();
   const signInAsGuest = vi.fn();
 
-  const executeGuard = (guard: typeof authGuard): Promise<boolean | UrlTree> =>
+  const executeGuard = (guard: typeof authGuard, url = '/'): Promise<boolean | UrlTree> =>
     TestBed.runInInjectionContext(
       () =>
         guard(
           {} as ActivatedRouteSnapshot,
-          {} as RouterStateSnapshot
+          { url } as RouterStateSnapshot
         ) as Promise<boolean | UrlTree>
     );
 
@@ -35,20 +35,20 @@ describe('auth guards', () => {
       await expect(executeGuard(authGuard)).resolves.toBe(true);
     });
 
-    it('redirects an anonymous user to the login page', async () => {
+    it('redirects an anonymous user to login, keeping the destination as returnUrl', async () => {
       user.mockReturnValue(null);
 
-      const result = await executeGuard(authGuard);
+      const result = await executeGuard(authGuard, '/rooms/new');
       expect(result).toBeInstanceOf(UrlTree);
-      expect(result.toString()).toBe('/auth/login');
+      expect(result.toString()).toBe('/auth/login?returnUrl=%2Frooms%2Fnew');
     });
 
     it('redirects a guest to the login page', async () => {
       user.mockReturnValue({ id: 'guest-1', login: 'calm-fox-11', isGuest: true });
 
-      const result = await executeGuard(authGuard);
+      const result = await executeGuard(authGuard, '/profile');
       expect(result).toBeInstanceOf(UrlTree);
-      expect(result.toString()).toBe('/auth/login');
+      expect(result.toString()).toBe('/auth/login?returnUrl=%2Fprofile');
     });
   });
 
