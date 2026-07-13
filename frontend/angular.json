@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "vejas-frontend": {
+    "fluks-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "vejas-frontend:build:production"
+              "buildTarget": "fluks-frontend:build:production"
             },
             "development": {
-              "buildTarget": "vejas-frontend:build:development"
+              "buildTarget": "fluks-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

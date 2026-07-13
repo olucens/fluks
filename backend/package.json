@@ -1,7 +1,7 @@
 {
-  "name": "vejas-backend-v2",
+  "name": "fluks-backend",
   "version": "0.1.0",
-  "description": "A production-ready NestJS application",
+  "description": "Fluks API — NestJS backend for synchronized watch-together rooms",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

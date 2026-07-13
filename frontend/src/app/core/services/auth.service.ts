@@ -4,8 +4,8 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthResult, AuthTokens, AuthUser } from '../../models/auth.model';
 
-const ACCESS_TOKEN_KEY = 'vejas.accessToken';
-const REFRESH_TOKEN_KEY = 'vejas.refreshToken';
+const ACCESS_TOKEN_KEY = 'fluks.accessToken';
+const REFRESH_TOKEN_KEY = 'fluks.refreshToken';
 
 interface JwtPayload {
   userId: string;

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://vejas-backend.onrender.com',
-  socketUrl: 'https://vejas-backend.onrender.com',
+  apiUrl: 'https://fluks-api.onrender.com',
+  socketUrl: 'https://fluks-api.onrender.com',
 };
