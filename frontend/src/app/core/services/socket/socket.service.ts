@@ -1,12 +1,27 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, InjectionToken, signal } from '@angular/core';
 import { filter, map, Observable, Subject } from 'rxjs';
-import { io, Socket } from 'socket.io-client';
+import { io, ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
 
 interface SocketEvent {
   event: string;
   payload: unknown;
 }
+
+export type SocketFactory = (
+  url: string,
+  opts?: Partial<ManagerOptions & SocketOptions>
+) => Socket;
+
+/**
+ * The socket.io entry point behind a DI token, so tests substitute a fake
+ * here instead of intercepting the module import (which breaks whenever
+ * the builder resolves 'socket.io-client' differently in app vs. spec).
+ */
+export const SOCKET_FACTORY = new InjectionToken<SocketFactory>('SOCKET_FACTORY', {
+  providedIn: 'root',
+  factory: () => io,
+});
 
 /**
  * Thin wrapper over socket.io-client so components/services never touch
@@ -23,6 +38,7 @@ interface SocketEvent {
 export class SocketService {
   readonly connected = signal(false);
 
+  private readonly createSocket = inject(SOCKET_FACTORY);
   private socket: Socket | null = null;
   private readonly events$ = new Subject<SocketEvent>();
 
@@ -31,7 +47,7 @@ export class SocketService {
       return;
     }
 
-    this.socket = io(environment.socketUrl, {
+    this.socket = this.createSocket(environment.socketUrl, {
       auth: (cb) => cb({ token: tokenProvider() }),
     });
     this.socket.on('connect', () => this.connected.set(true));

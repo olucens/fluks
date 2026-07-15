@@ -1,3 +1,7 @@
+# NOTE: the production service was created manually in the dashboard under
+# the name "fluks" (fluks.onrender.com); this blueprint mirrors that setup
+# for reference / re-creation. Applying it as-is would create parallel
+# services named fluks-api / fluks-redis.
 services:
   - type: web
     name: fluks-api

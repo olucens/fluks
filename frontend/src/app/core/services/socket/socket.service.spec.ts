@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { environment } from '../../../../environments/environment';
-import { SocketService } from './socket.service';
-import { io } from 'socket.io-client';
+import { SOCKET_FACTORY, SocketService } from './socket.service';
 
 interface Handler {
   (payload: unknown): void;
 }
 
-const { fakeSocket } = vi.hoisted(() => {
+function makeFakeSocket() {
   const handlers = new Map<string, Handler[]>();
   const anyHandlers: ((event: string, payload: unknown) => void)[] = [];
-  const fakeSocket = {
+  return {
     connected: false,
     emit: vi.fn(),
     connect: vi.fn(),
@@ -21,38 +20,26 @@ const { fakeSocket } = vi.hoisted(() => {
     onAny: vi.fn((cb: (event: string, payload: unknown) => void) => {
       anyHandlers.push(cb);
     }),
-    off: vi.fn((event: string, cb?: Handler) => {
-      if (!cb) {
-        handlers.delete(event);
-        return;
-      }
-      handlers.set(event, (handlers.get(event) ?? []).filter((h) => h !== cb));
-    }),
+    off: vi.fn(),
     trigger(event: string, payload: unknown): void {
       for (const cb of handlers.get(event) ?? []) cb(payload);
       for (const cb of anyHandlers) cb(event, payload);
     },
-    handlers,
-    anyHandlers,
   };
-  return { fakeSocket };
-});
-
-vi.mock('socket.io-client', () => ({
-  io: vi.fn(() => fakeSocket),
-}));
-
-const ioMock = io as unknown as ReturnType<typeof vi.fn>;
+}
 
 describe('SocketService', () => {
   let service: SocketService;
+  let fakeSocket: ReturnType<typeof makeFakeSocket>;
+  let ioMock: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    fakeSocket = makeFakeSocket();
+    ioMock = vi.fn(() => fakeSocket);
+    TestBed.configureTestingModule({
+      providers: [{ provide: SOCKET_FACTORY, useValue: ioMock }],
+    });
     service = TestBed.inject(SocketService);
-    vi.clearAllMocks();
-    fakeSocket.handlers.clear();
-    fakeSocket.anyHandlers.length = 0;
   });
 
   it('connects to the configured socket URL with an auth callback that reads a fresh token', () => {
