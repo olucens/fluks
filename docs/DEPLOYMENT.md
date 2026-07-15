@@ -19,7 +19,14 @@ fluks-api.onrender.com  ──►  Neon Postgres (durable data)
    ```
 3. Nothing else — migrations run automatically when the backend container starts (`prisma migrate deploy`).
 
-> Why not Render's free Postgres: it expires after 30 days; Neon's free tier is permanent.
+> Why not Render's free Postgres: it expires 30 days after creation (then gets suspended and deleted), and the free tier allows only one database per workspace. Neon's free tier is permanent and lives outside Render's limits.
+>
+> **Temporary alternative — reuse an existing Render Postgres:** if a free Postgres from a previous deployment still exists in your workspace, you can point `DATABASE_URL` at it (Dashboard → the database → Info → *Internal Database URL* if the API runs in the same workspace/region, otherwise *External*). The schema migrations are identical, so `prisma migrate deploy` is a no-op and existing data survives. Check its **expiry date** on the database page — plan the move to Neon before that day.
+
+## Render free-tier limits (one workspace)
+
+- **1 free Postgres** — expires 30 days after creation.
+- **1 free Key Value (Redis)** — if an old instance occupies the slot, delete it (Dashboard → old instance → Settings → Delete) before applying the blueprint; the old Vejas deployment is obsolete anyway. Same for the old web service — free web services are not limited to one, but keeping both wastes nothing except clarity.
 
 ## 2. Backend — Render Blueprint
 
@@ -29,6 +36,7 @@ fluks-api.onrender.com  ──►  Neon Postgres (durable data)
    - `fluks-redis` — Key Value instance (free plan), `REDIS_URL` wired automatically.
 3. When prompted, paste `DATABASE_URL` (the Neon string from step 1). JWT secrets are auto-generated.
 4. After the first deploy, verify: `https://fluks-api.onrender.com/health`.
+5. **Check the actual service URL** on the service page. If the global name `fluks-api` was taken, Render appends a suffix (e.g. `fluks-api-x3k2.onrender.com`) — then update `frontend/src/environments/environment.prod.ts` (`apiUrl` and `socketUrl`) and push.
 
 Environment (managed by the blueprint):
 
