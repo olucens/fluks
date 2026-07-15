@@ -2,7 +2,7 @@
 
 **Watch together, perfectly in sync.** Fluks lets you create a room, share a link, and watch online videos simultaneously with friends — with synchronized playback, a shared playlist, and live chat.
 
-**Live:** [https://fluks.org](https://fluks.org)
+**Live:** [https://flusk.org](https://flusk.org)
 
 ## Features
 
@@ -18,7 +18,7 @@
 
 ```mermaid
 flowchart LR
-    A["Angular 22 SPA<br/>GitHub Pages · fluks.org"] -- "REST (HTTPS)" --> B["NestJS 11 API<br/>Render · fluks-api"]
+    A["Angular 22 SPA<br/>GitHub Pages · flusk.org"] -- "REST (HTTPS)" --> B["NestJS 11 API<br/>Render · fluks-api"]
     A -- "WebSocket (socket.io)" --> B
     B -- Prisma --> C[("PostgreSQL<br/>Neon")]
     B -- ioredis --> D[("Redis<br/>Render Key Value")]
@@ -73,7 +73,7 @@ cd backend  && npm test     # Jest
 
 ## Deployment
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — GitHub Pages (frontend), Render Blueprint (backend + Redis), Neon (Postgres), DNS setup for fluks.org.
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — GitHub Pages (frontend), Render Blueprint (backend + Redis), Neon (Postgres), DNS setup for flusk.org.
 
 Planned work lives in [docs/ROADMAP.md](docs/ROADMAP.md) (guest access, more video sources, PWA — see [docs/PWA.md](docs/PWA.md)).
 

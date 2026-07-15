@@ -44,7 +44,7 @@ Do **not** cache `/auth/**`. WebSocket traffic is unaffected by the service work
 
 ## 4. GitHub Pages specifics
 
-- The service worker scope is the origin root — fine, since the app deploys with `--base-href /` on fluks.org.
+- The service worker scope is the origin root — fine, since the app deploys with `--base-href /` on flusk.org.
 - The deploy workflow copies `index.html` → `404.html`; `ngsw-worker.js` and `manifest.webmanifest` are emitted into the same `dist/fluks-frontend/browser` folder and need no extra handling.
 - HTTPS is required for service workers — Pages provides it once "Enforce HTTPS" is on.
 

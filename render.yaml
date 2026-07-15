@@ -28,7 +28,7 @@ services:
       - key: TOKEN_REFRESH_EXPIRE_TIME
         value: 24h
       - key: CORS_ORIGIN
-        value: https://fluks.org,https://www.fluks.org
+        value: https://flusk.org,https://www.flusk.org
       - key: LOG_LEVEL
         value: '2'
 

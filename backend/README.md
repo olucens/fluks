@@ -24,7 +24,7 @@ Health check: `GET /health`
 | Variable | Description | Example |
 |---|---|---|
 | `PORT` | HTTP/WS port | `4000` |
-| `CORS_ORIGIN` | Comma-separated list of allowed origins | `https://fluks.org,http://localhost:4200` |
+| `CORS_ORIGIN` | Comma-separated list of allowed origins | `https://flusk.org,http://localhost:4200` |
 | `DATABASE_URL` | Postgres connection string (Neon: add `sslmode=require`) | `postgresql://user:pass@host:5432/fluks_db?schema=public` |
 | `REDIS_URL` | Redis connection string | `redis://localhost:6379` |
 | `JWT_SECRET_KEY` / `JWT_SECRET_REFRESH_KEY` | Token signing secrets | — |

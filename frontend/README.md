@@ -2,7 +2,7 @@
 
 Angular 22 SPA for [Fluks](../README.md) — synchronized watch-together rooms. Standalone components, signals, SCSS design-token theming (light/dark), socket.io client for real-time room events.
 
-**Live:** [https://fluks.org](https://fluks.org)
+**Live:** [https://flusk.org](https://flusk.org)
 
 ## Development
 
