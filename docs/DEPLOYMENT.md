@@ -6,7 +6,7 @@ Production layout: frontend on **GitHub Pages** behind **flusk.org**, backend on
 flusk.org  ──►  GitHub Pages (Angular SPA)
                     │ HTTPS + WSS
                     ▼
-fluks-api.onrender.com  ──►  Neon Postgres (durable data)
+flusk-api.onrender.com  ──►  Neon Postgres (durable data)
                         └──►  Render Key Value (live room state)
 ```
 
@@ -30,13 +30,13 @@ fluks-api.onrender.com  ──►  Neon Postgres (durable data)
 
 ## 2. Backend — Render Blueprint
 
-1. Render dashboard → **New → Blueprint** → select the `fluks` GitHub repository.
+1. Render dashboard → **New → Blueprint** → select the `flusk` GitHub repository.
 2. Render reads [render.yaml](../render.yaml) and creates:
-   - `fluks-api` — Docker web service built from `backend/` (free plan);
-   - `fluks-redis` — Key Value instance (free plan), `REDIS_URL` wired automatically.
+   - `flusk-api` — Docker web service built from `backend/` (free plan);
+   - `flusk-redis` — Key Value instance (free plan), `REDIS_URL` wired automatically.
 3. When prompted, paste `DATABASE_URL` (the Neon string from step 1). JWT secrets are auto-generated.
-4. After the first deploy, verify: `https://fluks-api.onrender.com/health`.
-5. **Check the actual service URL** on the service page. If the global name `fluks-api` was taken, Render appends a suffix (e.g. `fluks-api-x3k2.onrender.com`) — then update `frontend/src/environments/environment.prod.ts` (`apiUrl` and `socketUrl`) and push.
+4. After the first deploy, verify: `https://flusk-api.onrender.com/health`.
+5. **Check the actual service URL** on the service page. If the global name `flusk-api` was taken, Render appends a suffix (e.g. `flusk-api-x3k2.onrender.com`) — then update `frontend/src/environments/environment.prod.ts` (`apiUrl` and `socketUrl`) and push.
 
 Environment (managed by the blueprint):
 

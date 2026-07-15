@@ -1,10 +1,10 @@
 # NOTE: the production service was created manually in the dashboard under
-# the name "fluks" (fluks.onrender.com); this blueprint mirrors that setup
+# the name "flusk" (flusk.onrender.com); this blueprint mirrors that setup
 # for reference / re-creation. Applying it as-is would create parallel
-# services named fluks-api / fluks-redis.
+# services named flusk-api / flusk-redis.
 services:
   - type: web
-    name: fluks-api
+    name: flusk-api
     runtime: docker
     rootDir: backend
     plan: free
@@ -15,7 +15,7 @@ services:
       - key: REDIS_URL
         fromService:
           type: keyvalue
-          name: fluks-redis
+          name: flusk-redis
           property: connectionString
       - key: JWT_SECRET_KEY
         generateValue: true
@@ -33,6 +33,6 @@ services:
         value: '2'
 
   - type: keyvalue
-    name: fluks-redis
+    name: flusk-redis
     plan: free
     ipAllowList: [] # internal connections only

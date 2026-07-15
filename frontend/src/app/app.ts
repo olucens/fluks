@@ -11,7 +11,7 @@ import { ErrorNotificationService } from './core/services/error-notification.ser
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  protected readonly title = signal('fluks-frontend');
+  protected readonly title = signal('flusk-frontend');
   private readonly theme = inject(ThemeService);
   protected readonly error = inject(ErrorNotificationService);
 }

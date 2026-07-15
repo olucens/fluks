@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { DEFAULT_THEME_CONFIG, THEME_CONFIG, Theme } from './theme.config';
 
-const THEME_STORAGE_KEY = 'fluks.theme';
+const THEME_STORAGE_KEY = 'flusk.theme';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {

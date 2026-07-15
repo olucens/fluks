@@ -1,4 +1,4 @@
-# Making Fluks a PWA
+# Making Flusk a PWA
 
 Step-by-step guide to turn the Angular frontend into an installable PWA with an offline shell. Not yet implemented — planned for v1.1.0 (see [ROADMAP.md](ROADMAP.md)).
 
@@ -17,7 +17,7 @@ This single schematic:
 
 ## 2. Replace the placeholder icons
 
-Generate maskable icons from the Fluks logo (512, 384, 192, 152, 144, 128, 96, 72 px). Set `"purpose": "any maskable"` in the manifest. Match `theme_color` / `background_color` to the app tokens (`#0ea5e9` accent on `#06111f` dark background works well).
+Generate maskable icons from the Flusk logo (512, 384, 192, 152, 144, 128, 96, 72 px). Set `"purpose": "any maskable"` in the manifest. Match `theme_color` / `background_color` to the app tokens (`#0ea5e9` accent on `#06111f` dark background works well).
 
 ## 3. Tune `ngsw-config.json`
 
@@ -28,7 +28,7 @@ The default config caches the app shell (index.html, JS, CSS) — keep it. Add a
   "dataGroups": [
     {
       "name": "rooms-api",
-      "urls": ["https://fluks-api.onrender.com/rooms**"],
+      "urls": ["https://flusk-api.onrender.com/rooms**"],
       "cacheConfig": {
         "strategy": "freshness",
         "timeout": "4s",
@@ -45,7 +45,7 @@ Do **not** cache `/auth/**`. WebSocket traffic is unaffected by the service work
 ## 4. GitHub Pages specifics
 
 - The service worker scope is the origin root — fine, since the app deploys with `--base-href /` on flusk.org.
-- The deploy workflow copies `index.html` → `404.html`; `ngsw-worker.js` and `manifest.webmanifest` are emitted into the same `dist/fluks-frontend/browser` folder and need no extra handling.
+- The deploy workflow copies `index.html` → `404.html`; `ngsw-worker.js` and `manifest.webmanifest` are emitted into the same `dist/flusk-frontend/browser` folder and need no extra handling.
 - HTTPS is required for service workers — Pages provides it once "Enforce HTTPS" is on.
 
 ## 5. Update flow
@@ -66,7 +66,7 @@ Without this, users keep the old bundle until every tab is closed.
 
 ## 6. Verify
 
-1. `ng build` and serve `dist/fluks-frontend/browser` statically (`npx http-server -p 8080`), open Chrome DevTools → Application → Service Workers.
+1. `ng build` and serve `dist/flusk-frontend/browser` statically (`npx http-server -p 8080`), open Chrome DevTools → Application → Service Workers.
 2. Lighthouse → PWA category — expect "Installable" to pass.
 3. Kill the network; reload — the shell must render (the rooms list may show the offline/error state).
 4. On a phone: "Add to Home Screen", launch, check the standalone window and splash screen.

@@ -23,7 +23,7 @@ Installable app with offline shell — see the step-by-step guide in [PWA.md](PW
 
 ## Done in v1.0
 
-- Monorepo migration (Vejas → Fluks), GitHub Pages + Render + Neon deployment.
+- Monorepo migration (Vejas → Flusk), GitHub Pages + Render + Neon deployment.
 - Mobile/theme CSS fixes across all screens.
 - Manual light/dark theme toggle with persisted choice.
 - Access-token auto-refresh (HTTP interceptor + socket reconnect with fresh token).

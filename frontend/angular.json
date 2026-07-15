@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "fluks-frontend": {
+    "flusk-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "fluks-frontend:build:production"
+              "buildTarget": "flusk-frontend:build:production"
             },
             "development": {
-              "buildTarget": "fluks-frontend:build:development"
+              "buildTarget": "flusk-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,6 +1,6 @@
-# Fluks Frontend
+# Flusk Frontend
 
-Angular 22 SPA for [Fluks](../README.md) — synchronized watch-together rooms. Standalone components, signals, SCSS design-token theming (light/dark), socket.io client for real-time room events.
+Angular 22 SPA for [Flusk](../README.md) — synchronized watch-together rooms. Standalone components, signals, SCSS design-token theming (light/dark), socket.io client for real-time room events.
 
 **Live:** [https://flusk.org](https://flusk.org)
 
@@ -11,14 +11,14 @@ npm ci
 npm start          # http://localhost:4200
 ```
 
-The dev build talks to the API at `http://localhost:3000` (`src/environments/environment.ts`); production points at `https://fluks-api.onrender.com` (`environment.prod.ts`). To run the API locally, see [backend/README.md](../backend/README.md).
+The dev build talks to the API at `http://localhost:3000` (`src/environments/environment.ts`); production points at `https://flusk-api.onrender.com` (`environment.prod.ts`). To run the API locally, see [backend/README.md](../backend/README.md).
 
 ## Scripts
 
 | Command | What it does |
 |---|---|
 | `npm start` | Dev server with live reload |
-| `npm run build` | Production build → `dist/fluks-frontend/browser` |
+| `npm run build` | Production build → `dist/flusk-frontend/browser` |
 | `npm test` | Unit tests (Vitest) |
 | `npm run lint` | ESLint over `src` |
 

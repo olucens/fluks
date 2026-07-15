@@ -1,7 +1,7 @@
 {
-  "name": "fluks-backend",
+  "name": "flusk-backend",
   "version": "0.1.0",
-  "description": "Fluks API — NestJS backend for synchronized watch-together rooms",
+  "description": "Flusk API — NestJS backend for synchronized watch-together rooms",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

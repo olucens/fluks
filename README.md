@@ -1,6 +1,6 @@
-# Fluks
+# Flusk
 
-**Watch together, perfectly in sync.** Fluks lets you create a room, share a link, and watch online videos simultaneously with friends — with synchronized playback, a shared playlist, and live chat.
+**Watch together, perfectly in sync.** Flusk lets you create a room, share a link, and watch online videos simultaneously with friends — with synchronized playback, a shared playlist, and live chat.
 
 **Live:** [https://flusk.org](https://flusk.org)
 
@@ -18,7 +18,7 @@
 
 ```mermaid
 flowchart LR
-    A["Angular 22 SPA<br/>GitHub Pages · flusk.org"] -- "REST (HTTPS)" --> B["NestJS 11 API<br/>Render · fluks-api"]
+    A["Angular 22 SPA<br/>GitHub Pages · flusk.org"] -- "REST (HTTPS)" --> B["NestJS 11 API<br/>Render · flusk-api"]
     A -- "WebSocket (socket.io)" --> B
     B -- Prisma --> C[("PostgreSQL<br/>Neon")]
     B -- ioredis --> D[("Redis<br/>Render Key Value")]
@@ -31,7 +31,7 @@ flowchart LR
 ## Repository structure
 
 ```
-fluks/
+flusk/
 ├── frontend/   # Angular 22 SPA (standalone components, signals, SCSS design tokens)
 ├── backend/    # NestJS 11 API (Prisma, Redis, JWT auth, socket.io gateway)
 ├── docs/       # Deployment guide

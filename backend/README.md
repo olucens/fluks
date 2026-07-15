@@ -1,6 +1,6 @@
-# Fluks API
+# Flusk API
 
-NestJS backend for [Fluks](../README.md) — synchronized watch-together rooms. PostgreSQL (Prisma) for durable data, Redis for live room state, socket.io for real-time events, JWT auth with refresh tokens.
+NestJS backend for [Flusk](../README.md) — synchronized watch-together rooms. PostgreSQL (Prisma) for durable data, Redis for live room state, socket.io for real-time events, JWT auth with refresh tokens.
 
 ## Quick start
 
@@ -25,7 +25,7 @@ Health check: `GET /health`
 |---|---|---|
 | `PORT` | HTTP/WS port | `4000` |
 | `CORS_ORIGIN` | Comma-separated list of allowed origins | `https://flusk.org,http://localhost:4200` |
-| `DATABASE_URL` | Postgres connection string (Neon: add `sslmode=require`) | `postgresql://user:pass@host:5432/fluks_db?schema=public` |
+| `DATABASE_URL` | Postgres connection string (Neon: add `sslmode=require`) | `postgresql://user:pass@host:5432/flusk_db?schema=public` |
 | `REDIS_URL` | Redis connection string | `redis://localhost:6379` |
 | `JWT_SECRET_KEY` / `JWT_SECRET_REFRESH_KEY` | Token signing secrets | — |
 | `TOKEN_EXPIRE_TIME` / `TOKEN_REFRESH_EXPIRE_TIME` | Token lifetimes | `1h` / `24h` |

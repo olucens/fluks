@@ -42,12 +42,12 @@ jobs:
       # Custom domain + SPA fallback: GitHub Pages serves 404.html for
       # unknown paths, so deep links like /rooms/:id load the app.
       - run: |
-          echo "flusk.org" > dist/fluks-frontend/browser/CNAME
-          cp dist/fluks-frontend/browser/index.html dist/fluks-frontend/browser/404.html
+          echo "flusk.org" > dist/flusk-frontend/browser/CNAME
+          cp dist/flusk-frontend/browser/index.html dist/flusk-frontend/browser/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/dist/fluks-frontend/browser
+          path: frontend/dist/flusk-frontend/browser
 
       - id: deploy
         uses: actions/deploy-pages@v4

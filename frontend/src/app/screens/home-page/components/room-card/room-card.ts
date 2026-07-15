@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Room } from '../../../../models/room.model';
 import { ViewersPipe } from '../../../../core/pipes/viewers-pipe';
 
-const FALLBACK_COVER = 'https://placehold.co/640x360?text=Fluks';
+const FALLBACK_COVER = 'https://placehold.co/640x360?text=Flusk';
 
 @Component({
   selector: 'app-room-card',

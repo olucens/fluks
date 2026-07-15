@@ -1,18 +1,18 @@
 services:
   db:
-    container_name: fluks-db
+    container_name: flusk-db
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DB: ${POSTGRES_DB:-fluks_db}
+      POSTGRES_DB: ${POSTGRES_DB:-flusk_db}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - fluks-network
+      - flusk-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin}"]
       interval: 10s
@@ -20,13 +20,13 @@ services:
       retries: 5
 
   redis:
-    container_name: fluks-redis
+    container_name: flusk-redis
     image: redis:7-alpine
     restart: unless-stopped
     ports:
       - "${REDIS_PORT:-6379}:6379"
     networks:
-      - fluks-network
+      - flusk-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -34,7 +34,7 @@ services:
       retries: 5
 
   app:
-    container_name: fluks-api
+    container_name: flusk-api
     build:
       context: .
       target: builder
@@ -46,8 +46,8 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DB: ${POSTGRES_DB:-fluks_db}
-      DATABASE_URL: postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-changeme}@db:5432/${POSTGRES_DB:-fluks_db}?schema=public
+      POSTGRES_DB: ${POSTGRES_DB:-flusk_db}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-changeme}@db:5432/${POSTGRES_DB:-flusk_db}?schema=public
       REDIS_URL: redis://redis:6379
     depends_on:
       db:
@@ -56,7 +56,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     networks:
-      - fluks-network
+      - flusk-network
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -67,5 +67,5 @@ volumes:
   pgdata:
 
 networks:
-  fluks-network:
+  flusk-network:
     driver: bridge
