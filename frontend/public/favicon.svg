@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Fluks logo: a potion flask with a flowing "flux" wave inside.
+       Original artwork for the Fluks project (no third-party assets). -->
+  <rect width="32" height="32" rx="8" fill="#0284c7"/>
+  <g transform="translate(4 4)" fill="none" stroke="#f0fbff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.5 2.5h5"/>
+    <path d="M10.5 2.5v4.2a6.9 6.9 0 1 0 3 0V2.5"/>
+    <path d="M7 13.6q1.25 -1.1 2.5 0t2.5 0 2.5 0 2.5 0"/>
+    <circle cx="10.4" cy="10.9" r="0.55" fill="#f0fbff" stroke="none"/>
+    <circle cx="13.6" cy="9.9" r="0.35" fill="#f0fbff" stroke="none"/>
+  </g>
+</svg>
