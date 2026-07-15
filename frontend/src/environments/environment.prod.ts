@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://flusk.onrender.com',
-  socketUrl: 'https://flusk.onrender.com',
+  apiUrl: 'https://fluks.onrender.com',
+  socketUrl: 'https://fluks.onrender.com',
 };
