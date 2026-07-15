@@ -6,7 +6,16 @@ interface Handler {
   (payload: unknown): void;
 }
 
-function makeFakeSocket() {
+function makeFakeSocket(): {
+  connected: boolean;
+  emit: ReturnType<typeof vi.fn>;
+  connect: ReturnType<typeof vi.fn>;
+  disconnect: ReturnType<typeof vi.fn>;
+  on: ReturnType<typeof vi.fn>;
+  onAny: ReturnType<typeof vi.fn>;
+  off: ReturnType<typeof vi.fn>;
+  trigger(event: string, payload: unknown): void;
+} {
   const handlers = new Map<string, Handler[]>();
   const anyHandlers: ((event: string, payload: unknown) => void)[] = [];
   return {
