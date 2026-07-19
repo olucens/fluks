@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme/theme.service';
 import { RouterLink } from '@angular/router';
+import { APP_BRAND } from '../../core/brand';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
+  protected readonly brand = inject(APP_BRAND);
   private authService = inject(AuthService);
   private themeService = inject(ThemeService);
 

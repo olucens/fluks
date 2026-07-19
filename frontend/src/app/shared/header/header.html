@@ -1,23 +1,8 @@
 <header aria-label="Site header" class="header__header">
-  <a routerLink="/" class="header__brand" aria-label="Flusk — home">
+  <a routerLink="/" class="header__brand" [attr.aria-label]="brand.name + ' — home'">
     <span class="header__logo">
-      <svg
-        class="header__logo-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.7"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M9.5 2.5h5" />
-        <path d="M10.5 2.5v4.2a6.9 6.9 0 1 0 3 0V2.5" />
-        <path d="M7 13.6q1.25 -1.1 2.5 0t2.5 0 2.5 0 2.5 0" />
-        <circle cx="10.4" cy="10.9" r="0.55" fill="currentColor" stroke="none" />
-        <circle cx="13.6" cy="9.9" r="0.35" fill="currentColor" stroke="none" />
-      </svg>
-      <span class="header__logo-text">Flusk</span>
+      <img class="header__logo-icon" [src]="brand.logoUrl" alt="" aria-hidden="true" />
+      <span class="header__logo-text">{{ brand.name }}</span>
     </span>
   </a>
   <div class="header__actions">

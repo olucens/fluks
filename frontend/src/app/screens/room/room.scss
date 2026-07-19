@@ -31,6 +31,9 @@ app-footer {
     margin: 0;
     color: var(--app-text);
     font-size: 1.5rem;
+    // Unbroken room names must wrap instead of widening the page.
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
 
   &__meta {
@@ -61,7 +64,9 @@ app-footer {
 
   &__layout {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    // minmax(0, …): grid tracks default to min-content sizing, letting
+    // wide children (player, long links) push the page past the viewport.
+    grid-template-columns: minmax(0, 1fr) 320px;
     gap: 1.5rem;
     align-items: start;
   }
@@ -70,12 +75,14 @@ app-footer {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    min-width: 0;
   }
 
   &__chat {
     position: sticky;
     top: 1rem;
     height: calc(100vh - 6rem);
+    min-width: 0;
   }
 }
 
